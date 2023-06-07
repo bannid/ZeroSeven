@@ -1,6 +1,6 @@
 using System;
 
-namespace ZeroSeven.Models
+namespace PetStore.Models
 {
     public class ErrorViewModel
     {

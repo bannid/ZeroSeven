@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "ZeroSeven": {
+    "PetStore": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

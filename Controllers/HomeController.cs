@@ -5,26 +5,25 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ZeroSeven.Models;
+using PetStore.Models;
+using PetStore.Data;
 
-namespace ZeroSeven.Controllers
+namespace PetStore.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IPetRepository _petDbContext;
+        public HomeController(ILogger<HomeController> logger, IPetRepository petDbContext)
         {
             _logger = logger;
+            _petDbContext = petDbContext;
         }
 
         public IActionResult Index()
         {
             ViewBag.title = "Pet list";
-            IList<PetModel> pets = new List<PetModel>();
-            PetModel pet = new PetModel();
-            pet.Name = "something";
-            pets.Add(pet);
-            return View(pets);
+            return View(_petDbContext.GetPets());
         }
 
         public IActionResult Privacy()
