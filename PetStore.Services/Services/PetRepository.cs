@@ -11,7 +11,7 @@ namespace PetStore.Services
         {
             _context = context;
         }
-        public IList<Pet> GetSomethings()
+        public IList<PetDto> GetPets()
         {
             return _context.Somethings.ToList();   
         }

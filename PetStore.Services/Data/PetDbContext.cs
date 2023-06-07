@@ -8,6 +8,6 @@ namespace PetStore.Services.Data
         {
             optionsBuilder.UseInMemoryDatabase(databaseName: "PetsDB");
         }
-        public DbSet<Pet> Somethings { get; set; }
+        public DbSet<PetDto> Somethings { get; set; }
     }
 }

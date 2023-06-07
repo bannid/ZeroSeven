@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using PetStore.Models;
 using PetStore.Services;
+using PetStore.WebApp.Models;
+using System.Collections.Generic;
 
 namespace PetStore.Controllers
 {
@@ -20,7 +22,14 @@ namespace PetStore.Controllers
         public IActionResult Index()
         {
             ViewBag.title = "Pet list";
-            return View(_petService.GetSomethings());
+            var petDtos = _petService.GetPets();
+            IList<PetViewModel> pets = new List<PetViewModel>();
+            for(int i = 0; i < petDtos.Count; i++)
+            {
+                var petDto = petDtos[i];
+                pets.Add(new PetViewModel { DateOfBirth = petDto.DateOfBirth, Name = petDto.Name, Type = petDto.Type, Weight = petDto.Weight});
+            }
+            return View(pets);
         }
 
         public IActionResult Privacy()

@@ -1,4 +1,4 @@
-﻿@model List<PetStore.Services.Models.Pet>
+﻿@model List<PetStore.WebApp.Models.PetViewModel>
 
 <!DOCTYPE html>
 <html>
@@ -32,6 +32,7 @@
                     <th>Date of Birth</th>
                     <th>Weight</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="pets">
@@ -44,6 +45,7 @@
                     <td>@pet.DateOfBirth</td>
                     <td>@pet.Weight</td>
                     <td><a href="/home/privacy/1"> Update </a></td>
+                    <td><a href="/home/privacy/1"> Delete</a></td>
                 </tr>
                 }
             </tbody>

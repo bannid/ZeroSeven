@@ -20,7 +20,7 @@ namespace PetStore
                 try
                 {
                     var context = services.GetRequiredService<PetDbContext>();
-                    var pet = new Pet();
+                    var pet = new PetDto();
                     pet.ID = "1";
                     pet.Name = "Joy";
                     pet.DateOfBirth = DateTime.Parse("2015-01-01");
