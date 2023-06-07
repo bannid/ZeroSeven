@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PetStore.Data;
+﻿using PetStore.Data;
 using PetStore.Models;
 using System;
 using System.Collections.Generic;
@@ -8,13 +7,16 @@ using System.Threading.Tasks;
 
 namespace PetStore.Data
 {
-    public class PetDbContext : DbContext
+    public class PetRepository : IPetRepository
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        private readonly PetDbContext _context;
+        public PetRepository(PetDbContext context)
         {
-            optionsBuilder.UseInMemoryDatabase(databaseName: "PetsDB");
+            _context = context;
         }
-        public DbSet<PetModel> Pets { get; set; }
-
+        public IList<PetModel> GetPets()
+        {
+            return _context.Pets.ToList();
+        }
     }
 }

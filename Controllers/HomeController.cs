@@ -14,18 +14,18 @@ namespace PetStore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly PetDbContext _petDbContext;
-        public HomeController(ILogger<HomeController> logger, PetDbContext petDbContext)
+        private readonly IPetRepository _petService;
+        public HomeController(ILogger<HomeController> logger, IPetRepository petServices)
         {
             _logger = logger;
-            _petDbContext = petDbContext;
+            _petService = petServices;
         }
 
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             ViewBag.title = "Pet list";
-            return View(await _petDbContext.Pets.ToListAsync());
+            return View(_petService.GetPets());
         }
 
         public IActionResult Privacy()

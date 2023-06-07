@@ -27,6 +27,7 @@ namespace PetStore
         {
             services.AddControllersWithViews();
             services.AddDbContext<PetDbContext>();
+            services.AddScoped<IPetRepository, PetRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
