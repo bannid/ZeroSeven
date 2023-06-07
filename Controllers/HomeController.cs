@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using PetStore.Models;
-using PetStore.Data;
-using Microsoft.EntityFrameworkCore;
+using PetStore.Services;
 
 namespace PetStore.Controllers
 {
@@ -25,7 +20,7 @@ namespace PetStore.Controllers
         public IActionResult Index()
         {
             ViewBag.title = "Pet list";
-            return View(_petService.GetPets());
+            return View(_petService.GetSomethings());
         }
 
         public IActionResult Privacy()

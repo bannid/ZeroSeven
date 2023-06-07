@@ -1,16 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.IO;
-using Microsoft.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
-using PetStore.Data;
-using PetStore.Models;
+using PetStore.Services;
 
 namespace PetStore
 {
@@ -25,13 +18,14 @@ namespace PetStore
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<PetStore.Data.PetDbContext>();
-                    var pet = new PetModel();
+                    var context = services.GetRequiredService<PetStore.Services.PetDbContext>();
+                    var pet = new Pet();
+                    pet.ID = "1";
                     pet.Name = "Joy";
                     pet.DateOfBirth = DateTime.Parse("2015-01-01");
-                    pet.Weight = 22.4;
-                    pet.ID = "1";
                     pet.Type = "Ferret";
+                    pet.Weight = 22.3;
+                    context.Add(pet);
                     context.Add(pet);
                     context.SaveChanges();
                 }
