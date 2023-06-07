@@ -7,23 +7,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using PetStore.Models;
 using PetStore.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace PetStore.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IPetRepository _petDbContext;
-        public HomeController(ILogger<HomeController> logger, IPetRepository petDbContext)
+        private readonly PetDbContext _petDbContext;
+        public HomeController(ILogger<HomeController> logger, PetDbContext petDbContext)
         {
             _logger = logger;
             _petDbContext = petDbContext;
         }
 
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
             ViewBag.title = "Pet list";
-            return View(_petDbContext.GetPets());
+            return View(await _petDbContext.Pets.ToListAsync());
         }
 
         public IActionResult Privacy()

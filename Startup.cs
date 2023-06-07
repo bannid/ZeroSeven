@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PetStore.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace PetStore
 {
@@ -24,8 +25,8 @@ namespace PetStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IPetRepository, PetRepository>();
             services.AddControllersWithViews();
+            services.AddDbContext<PetDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

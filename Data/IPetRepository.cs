@@ -7,6 +7,6 @@ namespace PetStore.Data
 {
     public interface IPetRepository
     {
-        public IList<PetModel> GetPets();
+        public Task<IList<PetModel>> GetPets();
     }
 }
