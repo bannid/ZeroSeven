@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
+using PetStore.Services.Data;
+using PetStore.Services.Models;
 namespace PetStore.Services
 {
     public class PetRepository : IPetRepository

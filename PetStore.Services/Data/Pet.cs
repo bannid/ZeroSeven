@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PetStore.Services
+namespace PetStore.Services.Models
 {
     public class Pet
     {

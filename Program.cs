@@ -3,7 +3,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using PetStore.Services;
+using PetStore.Services.Models;
+using PetStore.Services.Data;
 
 namespace PetStore
 {
@@ -18,7 +19,7 @@ namespace PetStore
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<PetStore.Services.PetDbContext>();
+                    var context = services.GetRequiredService<PetDbContext>();
                     var pet = new Pet();
                     pet.ID = "1";
                     pet.Name = "Joy";

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-namespace PetStore.Services
+using PetStore.Services.Models;
+namespace PetStore.Services.Data
 {
     public class PetDbContext: DbContext
     {
