@@ -13,7 +13,7 @@ namespace PetStore.Services
         }
         public IList<PetDto> GetPets()
         {
-            return _context.Somethings.ToList();   
+            return _context.Pets.ToList();   
         }
     }
 }

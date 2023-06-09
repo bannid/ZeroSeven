@@ -27,7 +27,7 @@ namespace PetStore.Controllers
             for(int i = 0; i < petDtos.Count; i++)
             {
                 var petDto = petDtos[i];
-                pets.Add(new PetViewModel { DateOfBirth = petDto.DateOfBirth, Name = petDto.Name, Type = petDto.Type, Weight = petDto.Weight});
+                pets.Add(new PetViewModel { DateOfBirth = petDto.DateOfBirth, Name = petDto.Name, Type = petDto.Type.ToString(), Weight = petDto.Weight, ID=petDto.ID.ToString()});
             }
             return View(pets);
         }

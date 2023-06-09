@@ -11,6 +11,6 @@ namespace PetStore.WebApp.Models
         public string Name { get; set; }
         public string Type { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public double Weight { get; set; }
+        public decimal Weight { get; set; }
     }
 }
