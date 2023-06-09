@@ -4,6 +4,8 @@ namespace PetStore.Services
 {
     public interface IPetRepository
     {
-        public IList<PetDto> GetPets();
+        public IList<PetDto> GetPets(int pageNumber, int itemsPerPage);
+        public IList<PetDto> GetPetsAll();
+        public int GetNumberOfPets();
     }
 }

@@ -11,9 +11,20 @@ namespace PetStore.Services
         {
             _context = context;
         }
-        public IList<PetDto> GetPets()
+
+        public IList<PetDto> GetPets(int pageNumber, int itemsPerPage)
         {
-            return _context.Pets.ToList();   
+            return _context.Pets.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+        }
+
+        public IList<PetDto> GetPetsAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int GetNumberOfPets()
+        {
+            return _context.Pets.Count();
         }
     }
 }

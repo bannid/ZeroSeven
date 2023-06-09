@@ -1,4 +1,4 @@
-﻿@model List<PetStore.WebApp.Models.PetViewModel>
+﻿@model PetStore.WebApp.Models.PagedResponseViewModel<PetStore.WebApp.Models.PetViewModel>
 
 <!DOCTYPE html>
 <html>
@@ -17,11 +17,33 @@
         th {
             background-color: #f2f2f2;
         }
+
+        .pagination {
+            display: inline-block;
+        }
+
+            .pagination a {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                border: 1px solid #ddd;
+            }
+
+                .pagination a.active {
+                    background-color: #4CAF50;
+                    color: white;
+                    border: 1px solid #4CAF50;
+                }
+
+                .pagination a:hover:not(.active) {
+                    background-color: #ddd;
+                }
     </style>
 </head>
 <body>
     <h1>Pet List</h1>
-    @if (Model.Count > 0)
+    @if (Model.Items.Count > 0)
     {
         <table class="pets-table">
             <thead>
@@ -36,20 +58,32 @@
                 </tr>
             </thead>
             <tbody class="pets">
-                @foreach (var pet in Model)
+                @foreach (var pet in Model.Items)
                 {
-                <tr>
-                    <td>@pet.ID</td>
-                    <td>@pet.Name</td>
-                    <td>@pet.Type</td>
-                    <td>@pet.DateOfBirth</td>
-                    <td>@pet.Weight</td>
-                    <td><a href="/home/privacy/1"> Update </a></td>
-                    <td><a href="/home/privacy/1"> Delete</a></td>
-                </tr>
+                    <tr>
+                        <td>@pet.ID</td>
+                        <td>@pet.Name</td>
+                        <td>@pet.Type</td>
+                        <td>@pet.DateOfBirth</td>
+                        <td>@pet.Weight</td>
+                        <td><a href="/home/privacy/1"> Update </a></td>
+                        <td><a href="/home/privacy/1"> Delete</a></td>
+                    </tr>
                 }
             </tbody>
         </table>
+        <div class="pagination">
+            <a href="/home/index/@Model.GetPreviousPage()">&laquo;</a>
+            <a class="active" href="#">@Model.PageNumber</a>
+            @if (Model.GetNextPage() != -1)
+            {
+                <a href="/home/index/@Model.GetNextPage()">&raquo;</a>
+            }
+            else
+            {
+                <a class="disabled" href="#">&raquo;</a>
+            }
+        </div>
     }
     else
     {
