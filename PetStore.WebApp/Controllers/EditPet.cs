@@ -38,8 +38,6 @@ namespace PetStore.WebApp.Controllers
         [HttpPost]
         public IActionResult Update(PetViewModel pet)
         {
-            pet.Errors.Add("Something went wrong");
-            return View("Index", pet);
             _petService.UpdatePet(new PetDto { ID = pet.ID, DateOfBirth = pet.DateOfBirth, Name = pet.Name, Type = 4, Weight = pet.Weight });
             return View("Confirmation");
         }
