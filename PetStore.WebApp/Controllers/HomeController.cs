@@ -103,12 +103,7 @@ namespace PetStore.Controllers
             {
                 petDtos = _petService
                     .GetPets()
-                    .Where(x => {
-                        string type = _petService.GetPetType(x.Type).Name;
-                        var result = filter.Type != "type" || type == filter.Value;
-                        return result;
-                    }
-                    )
+                    .Where(x => filter.Type != "type" || _petService.GetPetType(x.Type).Name == filter.Value)
                     .Where(x => filter.Type != "name" || x.Name == filter.Value)
                     .ToList();
             }
@@ -116,7 +111,7 @@ namespace PetStore.Controllers
             int totalNumberOfPets = petDtos.Count;
             if (totalNumberOfPets == 0)
             {
-                return View(response);
+                return View("Index", response);
             }
             int totalNumberOfPages = (int)Math.Ceiling((decimal)totalNumberOfPets / response.ItemsPerPage);
             response.TotalNumberOfPages = totalNumberOfPages;

@@ -48,16 +48,55 @@
         <label>Filter type</label>
         <select name="Type">
             <option value="">Select</option>
-            <option value="type">Type</option>
-            <option value="name">Name</option>
+            @if (Model.Filter.Type == "type")
+            {
+                <option value="type" selected>Type</option>
+            }
+            else
+            {
+                <option value="type">Type</option>
+            }
+            @if (Model.Filter.Type == "name")
+            {
+                <option value="name" selected>Name</option>
+            }
+            else
+            {
+                <option value="name">Name</option>
+            }
         </select>
         <label>Filter value</label>
-        <input name="Value" />
-        <select name="OrderBy">
+        <input name="Value" value="@Model.Filter.Value" />
+        <label>Order by</label>
+        <select name="OrderBy" value="@Model.Filter.OrderBy">
             <option value="">Ordery by</option>
-            <option value="name">Name</option>
-            <option value="dob">Date of birth</option>
-            <option value="weight">Weight</option>
+
+            @if (Model.Filter.OrderBy == "name")
+            {
+                <option selected value="name">Name</option>
+            }
+            else
+            {
+                <option value="name">Name</option>
+            }
+            @if (Model.Filter.OrderBy == "dob")
+            {
+                <option selected value="dob">Date of birth</option>
+            }
+            else
+            {
+                <option value="dob">Date of birth</option>
+            }
+            @if (Model.Filter.OrderBy == "weight")
+            {
+                <option selected value="weight">Weight</option>
+            }
+            else
+            {
+                <option value="weight">Weight</option>
+            }
+
+
         </select>
         <input type="submit" value="Submit" />
     </form>
