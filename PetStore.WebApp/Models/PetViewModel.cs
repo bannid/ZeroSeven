@@ -12,5 +12,10 @@ namespace PetStore.WebApp.Models
         public string Type { get; set; }
         public DateTime DateOfBirth { get; set; }
         public decimal Weight { get; set; }
+        public IList<string> Errors { get; set; }
+        public PetViewModel()
+        {
+            Errors = new List<string>();
+        }
     }
 }
