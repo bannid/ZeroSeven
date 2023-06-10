@@ -9,5 +9,6 @@ namespace PetStore.Services.Data
             optionsBuilder.UseSqlServer("Server=tcp:devserverbanni.database.windows.net,1433;Initial Catalog=PetStore;Persist Security Info=False;User ID=bannidhaliwal;Password=Zer0Seven;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
         public DbSet<PetDto> Pets { get; set; }
+        public DbSet<PetType> PetTypes { get; set; }
     }
 }

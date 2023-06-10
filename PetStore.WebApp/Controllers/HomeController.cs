@@ -21,7 +21,7 @@ namespace PetStore.Controllers
             _petService = petServices;
         }
 
-        public IActionResult Index(string action, string page)
+        public IActionResult Index(string action, string page, string searchString)
         {
             PagedResponseViewModel<PetViewModel> response = new PagedResponseViewModel<PetViewModel>(7);
             int totalNumberOfPets = _petService.GetNumberOfPets();
@@ -44,11 +44,25 @@ namespace PetStore.Controllers
             {
                 pageNumber = 1;
             }
-            var petDtos = _petService.GetPets(pageNumber, response.ItemsPerPage);
-            for(int i = 0; i < petDtos.Count; i++)
+            IList<PetDto> petDtos;
+            if (searchString == null)
             {
-                var petDto = petDtos[i];
-                response.Items.Add(new PetViewModel { DateOfBirth = petDto.DateOfBirth, Name = petDto.Name, Type = petDto.Type.ToString(), Weight = petDto.Weight, ID=petDto.ID});
+                petDtos = _petService.GetPets(pageNumber, response.ItemsPerPage);
+            }
+            else
+            {
+                response.Filter = searchString;
+                petDtos = _petService.GetPetsWithName(pageNumber, response.ItemsPerPage, searchString);
+            }
+            foreach (var petDto in petDtos) {
+                response.Items.Add(
+                    new PetViewModel { 
+                        DateOfBirth = petDto.DateOfBirth,
+                        Name = petDto.Name,
+                        Type = _petService.GetPetType(petDto.Type).Name,
+                        Weight = petDto.Weight,
+                        ID=petDto.ID}
+                    );
             }
             response.PageNumber = pageNumber;
             return View(response);

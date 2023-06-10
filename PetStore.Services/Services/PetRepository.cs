@@ -22,6 +22,14 @@ namespace PetStore.Services
             throw new System.NotImplementedException();
         }
 
+        public IList<PetDto> GetPetsWithName(int pageNumber, int itemsPerPage, string name)
+        {
+            return _context.Pets
+                .Where(x => x.Name == name)
+                .Skip((pageNumber - 1) * itemsPerPage)
+                .Take(itemsPerPage).ToList();
+        }
+
         public int GetNumberOfPets()
         {
             return _context.Pets.Count();
@@ -31,6 +39,11 @@ namespace PetStore.Services
         {
             _context.Pets.Remove(pet);
             _context.SaveChanges();
+        }
+
+        public PetType GetPetType(int id)
+        {
+            return _context.PetTypes.Single(x => x.ID == id);
         }
     }
 }
