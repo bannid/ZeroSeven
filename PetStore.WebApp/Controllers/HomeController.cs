@@ -23,88 +23,47 @@ namespace PetStore.Controllers
             _petService = petServices;
         }
 
-        public IActionResult Index(string action, string page)
+        public IActionResult Index(PagedResponseViewModel<PetViewModel> model)
         {
             PagedResponseViewModel<PetViewModel> response = new PagedResponseViewModel<PetViewModel>(NUMBER_OF_ITEMS_PER_PAGE);
-            response.Filter = new FilterModel();
-            IList<PetDto> petDtos = _petService.GetPets()
-                                    .ToList();
-            int totalNumberOfPets = petDtos.Count;
-            if (totalNumberOfPets == 0)
-            {
-                return View(response);
-            }
-            int totalNumberOfPages = (int)Math.Ceiling((decimal)totalNumberOfPets / response.ItemsPerPage);
-            response.TotalNumberOfPages = totalNumberOfPages;
-            try
-            {
-                pageNumber = page != null ? int.Parse(page) : 1;
-                if (pageNumber > totalNumberOfPages)
-                {
-                    return RedirectToAction("");
-                }
-
-            }
-            catch (Exception e)
-            {
-                pageNumber = 1;
-            }
-            response.PageNumber = pageNumber;
-            var petDtosPaginated = petDtos
-                                    .Skip((response.PageNumber - 1) * response.ItemsPerPage)
-                                    .Take(response.ItemsPerPage)
-                                    .ToList();
-            foreach (var petDto in petDtosPaginated) {
-                response.Items.Add(
-                    new PetViewModel { 
-                        DateOfBirth = petDto.DateOfBirth,
-                        Name = petDto.Name,
-                        Type = _petService.GetPetType(petDto.Type).Name,
-                        Weight = petDto.Weight,
-                        ID=petDto.ID}
-                    );
-            }
-            return View(response);
-        }
-
-        public IActionResult Filter(FilterModel filter)
-        {
-            PagedResponseViewModel<PetViewModel> response = new PagedResponseViewModel<PetViewModel>(NUMBER_OF_ITEMS_PER_PAGE);
-            response.PageNumber = 1;
-            response.Filter = filter;
+            response.FilterType = model.FilterType;
+            response.FilterValue = model.FilterValue;
+            response.OrderBy = model.OrderBy;
+            response.PageNumber = model.PageNumber != 0 ? model.PageNumber : 1;
             IList<PetDto> petDtos;
-            if (filter.OrderBy == "weight") {
+            if (model.OrderBy == "weight")
+            {
                 petDtos = _petService
                     .GetPets()
                     .OrderBy(x => x.Weight)
-                    .Where(x => filter.Type != "type" || _petService.GetPetType(x.Type).Name == filter.Value)
-                    .Where(x => filter.Type != "name" || x.Name == filter.Value)
+                    .Where(x => model.FilterType != "type" || _petService.GetPetType(x.Type).Name == model.FilterValue)
+                    .Where(x => model.FilterType != "name" || x.Name == model.FilterValue)
                     .ToList();
             }
-            else if(filter.OrderBy == "name")
+            else if (model.OrderBy == "name")
             {
                 petDtos = _petService
                     .GetPets()
                     .OrderBy(x => x.Name)
-                    .Where(x => filter.Type != "type" || _petService.GetPetType(x.Type).Name == filter.Value)
-                    .Where(x => filter.Type != "name" || x.Name == filter.Value)
+                    .Where(x => model.FilterType != "type" || _petService.GetPetType(x.Type).Name == model.FilterValue)
+                    .Where(x => model.FilterType != "name" || x.Name == model.FilterValue)
                     .ToList();
             }
-            else if (filter.OrderBy == "dob")
+            else if (model.OrderBy == "dob")
             {
                 petDtos = _petService
                     .GetPets()
                     .OrderBy(x => x.DateOfBirth)
-                    .Where(x => filter.Type != "type" || _petService.GetPetType(x.Type).Name == filter.Value)
-                    .Where(x => filter.Type != "name" || x.Name == filter.Value)
+                    .Where(x => model.FilterType != "type" || _petService.GetPetType(x.Type).Name == model.FilterType)
+                    .Where(x => model.FilterType != "name" || x.Name == model.FilterType)
                     .ToList();
             }
             else
             {
                 petDtos = _petService
                     .GetPets()
-                    .Where(x => filter.Type != "type" || _petService.GetPetType(x.Type).Name == filter.Value)
-                    .Where(x => filter.Type != "name" || x.Name == filter.Value)
+                    .Where(x => model.FilterType != "type" || _petService.GetPetType(x.Type).Name == model.FilterValue)
+                    .Where(x => model.FilterType != "name" || x.Name == model.FilterValue)
                     .ToList();
             }
 
@@ -131,6 +90,7 @@ namespace PetStore.Controllers
             }
             return View("Index", response);
         }
+
         public IActionResult DeletePet(PetViewModel pet)
         {
             var petDto = new PetDto{ ID = pet.ID };

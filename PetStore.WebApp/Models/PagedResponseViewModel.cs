@@ -9,7 +9,9 @@ namespace PetStore.WebApp.Models
     {
         public int ItemsPerPage { get; set; } = 10;
         public IList<T> Items { get; set; }
-        public FilterModel Filter { get; set; }
+        public string FilterType { get; set; }
+        public string FilterValue { get; set; }
+        public string OrderBy { get; set; }
         public PagedResponseViewModel() {
             this.Items = new List<T>();
         }
