@@ -26,5 +26,11 @@ namespace PetStore.Services
         {
             return _context.Pets.Count();
         }
+
+        public void DeletePet(PetDto pet)
+        {
+            _context.Pets.Remove(pet);
+            _context.SaveChanges();
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace PetStore
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=index}/{page?}");
+                    pattern: "{controller=Home}/{action=index}/{page?}/{searchString?}");
             });
         }
     }

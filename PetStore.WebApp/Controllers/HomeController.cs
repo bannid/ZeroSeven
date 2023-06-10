@@ -6,6 +6,7 @@ using PetStore.Services;
 using PetStore.WebApp.Models;
 using System.Collections.Generic;
 using System;
+using PetStore.Services.Models;
 
 namespace PetStore.Controllers
 {
@@ -24,6 +25,10 @@ namespace PetStore.Controllers
         {
             PagedResponseViewModel<PetViewModel> response = new PagedResponseViewModel<PetViewModel>(7);
             int totalNumberOfPets = _petService.GetNumberOfPets();
+            if (totalNumberOfPets == 0)
+            {
+                return View(response);
+            }
             int totalNumberOfPages = (int)Math.Ceiling((decimal)totalNumberOfPets / response.ItemsPerPage);
             response.TotalNumberOfPages = totalNumberOfPages;
             try
@@ -40,16 +45,19 @@ namespace PetStore.Controllers
                 pageNumber = 1;
             }
             var petDtos = _petService.GetPets(pageNumber, response.ItemsPerPage);
-            
-            IList<PetViewModel> pets = new List<PetViewModel>();
             for(int i = 0; i < petDtos.Count; i++)
             {
                 var petDto = petDtos[i];
-                pets.Add(new PetViewModel { DateOfBirth = petDto.DateOfBirth, Name = petDto.Name, Type = petDto.Type.ToString(), Weight = petDto.Weight, ID=petDto.ID.ToString()});
+                response.Items.Add(new PetViewModel { DateOfBirth = petDto.DateOfBirth, Name = petDto.Name, Type = petDto.Type.ToString(), Weight = petDto.Weight, ID=petDto.ID});
             }
             response.PageNumber = pageNumber;
-            response.Items = pets;
             return View(response);
+        }
+        public IActionResult DeletePet(PetViewModel pet)
+        {
+            var petDto = new PetDto{ ID = pet.ID };
+            _petService.DeletePet(petDto);
+            return RedirectToAction("");
         }
         public IActionResult Privacy()
         {

@@ -6,6 +6,7 @@
     <title>Pet List</title>
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/petList.css")" media="screen" />
+    <script type="text/javascript" src="@Url.Content("~/js/Home.js")"></script>
     <style>
 
         th, td {
@@ -67,21 +68,20 @@
                         <td>@pet.DateOfBirth</td>
                         <td>@pet.Weight</td>
                         <td><a href="/home/privacy/1"> Update </a></td>
-                        <td><button onclick="DeleteConfirm(@pet.ID)"> Delete</button></td>
+                        <td>@Html.ActionLink("Delete", "DeletePet", pet)</td>
                     </tr>
                 }
             </tbody>
         </table>
         <div class="pagination">
-            <a href="/home/index/@Model.GetPreviousPage()">&laquo;</a>
+            @if (Model.PageNumber > 1)
+            {
+                <a href="/home/index/@Model.GetPreviousPage()">&laquo;</a>
+            }
             <a class="active" href="#">@Model.PageNumber</a>
             @if (Model.GetNextPage() != -1)
             {
                 <a href="/home/index/@Model.GetNextPage()">&raquo;</a>
-            }
-            else
-            {
-                <a class="disabled" href="#">&raquo;</a>
             }
         </div>
     }
@@ -90,12 +90,7 @@
         <p>No pets found.</p>
     }
     <script>
-        function DeleteConfirm(id) {
-            var result = confirm('Confirm Delete');
-            if (result) {
-                console.log('Item deleted ' + id);
-            }
-        }
+        something();
     </script>
 </body>
 </html>

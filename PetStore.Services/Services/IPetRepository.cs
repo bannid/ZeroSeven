@@ -7,5 +7,6 @@ namespace PetStore.Services
         public IList<PetDto> GetPets(int pageNumber, int itemsPerPage);
         public IList<PetDto> GetPetsAll();
         public int GetNumberOfPets();
+        public void DeletePet(PetDto pet);
     }
 }

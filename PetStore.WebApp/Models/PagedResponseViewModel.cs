@@ -8,14 +8,17 @@ namespace PetStore.WebApp.Models
     public class PagedResponseViewModel<T>
     {
         public int ItemsPerPage { get; set; } = 10;
-        public PagedResponseViewModel() { }
+        public IList<T> Items { get; set; }
+        public PagedResponseViewModel() {
+            this.Items = new List<T>();
+        }
         public PagedResponseViewModel(int itemsPerPage)
         {
             ItemsPerPage = itemsPerPage;
+            this.Items = new List<T>();
         }
         public int TotalNumberOfPages { get; set; }
         public int PageNumber { get; set; }
-        public IList<T> Items { get; set; }
         public int GetNextPage()
         {
             if (PageNumber < TotalNumberOfPages)
