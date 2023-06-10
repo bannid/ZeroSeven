@@ -5,7 +5,6 @@ using PetStore.Models;
 using PetStore.Services;
 using PetStore.WebApp.Models;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
 
 namespace PetStore.Controllers

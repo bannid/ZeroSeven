@@ -67,7 +67,7 @@
                         <td>@pet.DateOfBirth</td>
                         <td>@pet.Weight</td>
                         <td><a href="/home/privacy/1"> Update </a></td>
-                        <td><a href="/home/privacy/1"> Delete</a></td>
+                        <td><button onclick="DeleteConfirm(@pet.ID)"> Delete</button></td>
                     </tr>
                 }
             </tbody>
@@ -89,5 +89,13 @@
     {
         <p>No pets found.</p>
     }
+    <script>
+        function DeleteConfirm(id) {
+            var result = confirm('Confirm Delete');
+            if (result) {
+                console.log('Item deleted ' + id);
+            }
+        }
+    </script>
 </body>
 </html>
