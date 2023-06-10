@@ -12,27 +12,9 @@ namespace PetStore.Services
             _context = context;
         }
 
-        public IList<PetDto> GetPets(int pageNumber, int itemsPerPage)
+        public IList<PetDto> GetPets()
         {
-            return _context.Pets.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage).ToList();
-        }
-
-        public IList<PetDto> GetPetsAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IList<PetDto> GetPetsWithName(int pageNumber, int itemsPerPage, string name)
-        {
-            return _context.Pets
-                .Where(x => x.Name == name)
-                .Skip((pageNumber - 1) * itemsPerPage)
-                .Take(itemsPerPage).ToList();
-        }
-
-        public int GetNumberOfPets()
-        {
-            return _context.Pets.Count();
+            return _context.Pets.ToList();
         }
 
         public void DeletePet(PetDto pet)
