@@ -73,10 +73,6 @@ namespace PetStore.Controllers
             _petService.DeletePet(petDto);
             return RedirectToAction("");
         }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

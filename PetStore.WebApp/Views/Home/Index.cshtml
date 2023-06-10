@@ -68,7 +68,7 @@
                         <td>@pet.Type</td>
                         <td>@pet.DateOfBirth</td>
                         <td>@pet.Weight</td>
-                        <td><a href="/home/privacy/1"> Update </a></td>
+                        <td>@Html.ActionLink("Update", "Index", "EditPet", new { id = pet.ID })</td>
                         <td>@Html.ActionLink("Delete", "DeletePet", pet)</td>
                     </tr>
                 }

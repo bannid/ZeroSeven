@@ -45,5 +45,16 @@ namespace PetStore.Services
         {
             return _context.PetTypes.Single(x => x.ID == id);
         }
+
+        public PetDto GetPet(int id)
+        {
+            return _context.Pets.Single(x => x.ID == id);
+        }
+
+        public void UpdatePet(PetDto pet)
+        {
+            _context.Pets.Update(pet);
+            _context.SaveChanges();
+        }
     }
 }

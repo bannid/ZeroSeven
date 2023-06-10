@@ -1,0 +1,28 @@
+﻿@model PetStore.WebApp.Models.PetViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit pet</title>
+</head>
+
+<body>
+    <form action="/EditPet/Update" method="post">
+        <input style="display:none" name="ID" value="@Model.ID" />
+
+        <label for="firstName">Name:</label>
+        <input type="text" id="firstName" name="Name" value="@Model.Name" />
+
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="text" id="dateOfBirth" name="DateOfBirth" value="@Model.DateOfBirth" />
+
+        <label for="weight">Weight:</label>
+        <input type="text" id="weight" name="Weight" value="@Model.Weight" />
+
+        <label for="type">Type:</label>
+        <input type="text" id="type" name="Type" value="@Model.Type" />
+
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>

@@ -50,6 +50,9 @@ namespace PetStore
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=index}/{page?}/{searchString?}");
+                endpoints.MapControllerRoute(
+                    name: "EditPet",
+                    pattern: "{controller=EditPet}/{action=index}/{id?}");
             });
         }
     }
