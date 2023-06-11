@@ -31,7 +31,7 @@ namespace PetStore.WebApp.Mappers
         {
             return new PetViewModel {
                 ID = petDto.ID,
-                DateOfBirth = petDto.DateOfBirth.ToString(),
+                DateOfBirth = String.Format("{0:MM/dd/yyyy}", petDto.DateOfBirth),
                 Weight = petDto.Weight.ToString(),
                 Type = _petService.GetPetType(petDto.Type).Name,
                 Name = petDto.Name
