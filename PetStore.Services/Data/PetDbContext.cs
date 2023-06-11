@@ -1,12 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PetStore.Services.Models;
 namespace PetStore.Services.Data
 {
     public class PetDbContext: DbContext
     {
+        IConfiguration _config;
+        public PetDbContext(IConfiguration configuration)
+        {
+            _config = configuration;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=tcp:devserverbanni.database.windows.net,1433;Initial Catalog=PetStore;Persist Security Info=False;User ID=bannidhaliwal;Password=Zer0Seven;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            var connectionString = _config.GetValue<string>("AppSettings:ConnectionString");
+            optionsBuilder.UseSqlServer(connectionString);
         }
         public DbSet<PetDto> Pets { get; set; }
         public DbSet<PetType> PetTypes { get; set; }

@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using PetStore.Services;
 using PetStore.Services.Data;
 using PetStore.WebApp.Mappers;
@@ -13,9 +12,13 @@ namespace PetStore
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostEnvironment env)
         {
             Configuration = configuration;
+            var config = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile($"appSettings.json")
+                .Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -25,6 +28,7 @@ namespace PetStore
         {
             services.AddControllersWithViews();
             services.AddDbContext<PetDbContext>();
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddScoped<ZSLogger>();
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<PetViewModelMapper>();
