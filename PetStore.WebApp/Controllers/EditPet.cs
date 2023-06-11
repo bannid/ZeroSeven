@@ -30,7 +30,7 @@ namespace PetStore.WebApp.Controllers
             } 
             catch(Exception e)
             {
-                _logger.Error(e,"Pet with {@id} not found", id);
+                _logger.Error(e,"Pet with id {@id} not found", id);
                 return View("NotFound");
             }
         }

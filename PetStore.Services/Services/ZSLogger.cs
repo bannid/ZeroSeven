@@ -10,9 +10,10 @@ namespace PetStore.Services
 {
     public class ZSLogger { 
         private readonly Serilog.Core.Logger _logger;
-        public ZSLogger(IConfigurationRoot configuration)
+        public ZSLogger()
         {
             _logger = new LoggerConfiguration()
+                .WriteTo.Console()
                 .WriteTo.File("LogFile.txt")
                 .CreateLogger();
         }
