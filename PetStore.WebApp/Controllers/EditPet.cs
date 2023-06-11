@@ -11,10 +11,10 @@ namespace PetStore.WebApp.Controllers
 {
     public class EditPet : Controller
     {
-        private readonly ILogger<EditPet> _logger;
+        private readonly ZSLogger _logger;
         private readonly IPetRepository _petService;
         private readonly PetViewModelMapper _mapper;
-        public EditPet(ILogger<EditPet> logger, IPetRepository petServices, PetViewModelMapper mapper)
+        public EditPet(ZSLogger logger, IPetRepository petServices, PetViewModelMapper mapper)
         {
             _logger = logger;
             _petService = petServices;
@@ -30,6 +30,7 @@ namespace PetStore.WebApp.Controllers
             } 
             catch(Exception e)
             {
+                _logger.Error(e,"Pet with {@id} not found", id);
                 return View("NotFound");
             }
         }
@@ -42,12 +43,16 @@ namespace PetStore.WebApp.Controllers
         {
             if (_petService.GetAllPetTypes().Where(x => x.Name == pet.Type).ToList().Count == 0)
             {
+                _logger.Information("Invalid pet type passed to Update pet function");
                 pet.Errors.Add("Invalid pet type");
-                return View("Index", pet);
             }
             if (_petService.GetPets().Where(x => x.Name == pet.Name && x.ID != pet.ID).ToList().Count > 0)
             {
+                _logger.Information("Duplicte pet name passed to Update pet");
                 pet.Errors.Add($"Pet with name {pet.Name} already exists");
+            }
+            if (pet.Errors.Count > 0)
+            {
                 return View("Index", pet);
             }
             int type = _petService.GetAllPetTypes().Single(x => x.Name == pet.Type).ID;
@@ -57,6 +62,7 @@ namespace PetStore.WebApp.Controllers
             }
             catch(Exception e)
             {
+                _logger.Error(e, "Update pet failed");
                 return View("UpdateFail");
             }
             return View("Confirmation");

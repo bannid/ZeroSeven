@@ -24,6 +24,7 @@ namespace PetStore
         {
             services.AddControllersWithViews();
             services.AddDbContext<PetDbContext>();
+            services.AddScoped<ZSLogger>();
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<PetViewModelMapper>();
         }

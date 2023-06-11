@@ -14,10 +14,10 @@ namespace PetStore.Controllers
     public class HomeController : Controller
     {
         private const int NUMBER_OF_ITEMS_PER_PAGE = 10;
-        private readonly ILogger<HomeController> _logger;
+        private readonly ZSLogger _logger;
         private readonly IPetRepository _petService;
         private readonly PetViewModelMapper _mapper;
-        public HomeController(ILogger<HomeController> logger, IPetRepository petServices, PetViewModelMapper mapper)
+        public HomeController(ZSLogger logger, IPetRepository petServices, PetViewModelMapper mapper)
         {
             _logger = logger;
             _petService = petServices;
@@ -85,6 +85,7 @@ namespace PetStore.Controllers
 
         public IActionResult DeletePet(PetViewModel pet)
         {
+            _logger.Information("Delete pet called with pet id: {@id}", pet.ID);
             var petDto = new PetDto{ ID = pet.ID };
             _petService.DeletePet(petDto);
             return RedirectToAction("");
