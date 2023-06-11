@@ -7,26 +7,30 @@
 </head>
 
 <body>
-    @foreach(var error in Model.Errors)
+    @foreach (var error in Model.Errors)
     {
         <p style="color: darkred">@error</p>
     }
-    <form asp-controller="AddPet" asp-action="Add" method="post">
-        <input style="display:none" name="ID" value="@Model.ID" />
-
+<form asp-controller="AddPet" asp-action="Add" method="post">
+    <input style="display:none" name="ID" value="@Model.ID" />
+    <div style="float:left;width:100%">
         <label for="firstName">Name:</label>
         <input type="text" id="firstName" name="Name" value="@Model.Name" />
-
+    </div>
+    <div style="float:left;width:100%">
         <label for="dateOfBirth">Date of Birth:</label>
         <input type="text" id="dateOfBirth" name="DateOfBirth" value="@Model.DateOfBirth" />
-
+    </div>
+    <div style="float:left;width:100%">
         <label for="weight">Weight:</label>
         <input type="text" id="weight" name="Weight" value="@Model.Weight" />
-
+    </div>
+    <div style="float:left;width:100%">
         <label for="type">Type:</label>
         <input type="text" id="type" name="Type" value="@Model.Type" />
-
-        <input type="submit" value="Create" />
-    </form>
+    </div>
+    <input type="submit" value="Create" />
+</form>
+    <button onclick="window.location = '/Home'">Cancel</button>
 </body>
 </html>
