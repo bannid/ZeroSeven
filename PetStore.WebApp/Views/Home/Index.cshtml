@@ -5,41 +5,7 @@
 <head>
     <title>Pet List</title>
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/petList.css")" media="screen" />
-    <style>
-
-        th, td {
-            text-align: left;
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .pagination {
-            display: inline-block;
-        }
-
-            .pagination a {
-                color: black;
-                float: left;
-                padding: 8px 16px;
-                text-decoration: none;
-                border: 1px solid #ddd;
-            }
-
-                .pagination a.active {
-                    background-color: #4CAF50;
-                    color: white;
-                    border: 1px solid #4CAF50;
-                }
-
-                .pagination a:hover:not(.active) {
-                    background-color: #ddd;
-                }
-    </style>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/petList.css")" />
 </head>
 <body onload="onload()">
     <h1>Pet List</h1>
@@ -159,7 +125,7 @@
     {
         <p>No pets found.</p>
     }
-    <div id="dialog" title="Basic dialog">
+    <div id="dialog" title="Basic dialog" style="display:none">
         <p>
             Are you sure you want to delete this
             pet?
@@ -167,28 +133,6 @@
         <button onclick="deleteItem()">Yes</button>
         <button onclick="closeModal()">No</button>
     </div>
-    <script>
-        function onload() {
-            $(function () {
-                $("#dialog").dialog({
-                    autoOpen: false
-                });
-            });
-        }
-        function openModal(id) {
-            window.deleteContext = id;
-            $("#dialog").dialog('open');
-        }
-        function closeModal() {
-            window.deleteContext = null;
-            $("#dialog").dialog('close');
-        }
-        function deleteItem() {
-            console.log('Called');
-            const elementID = "deleteLink" + window.deleteContext;
-            document.getElementById(elementID).click();
-            closeModal();
-        }
-    </script>
+    <script type="text/javascript" src="@Url.Content("~/js/Home.js")"></script>
 </body>
 </html>
