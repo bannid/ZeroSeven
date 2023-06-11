@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PetStore.Services;
 using PetStore.Services.Models;
 using PetStore.WebApp.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PetStore.WebApp.Controllers
 {
@@ -22,14 +19,23 @@ namespace PetStore.WebApp.Controllers
         }
         public IActionResult Index(string action, int id)
         {
-            var petDto = _petService.GetPet(id);
-            var pet = new PetViewModel { 
-                Name = petDto.Name,
-                DateOfBirth = petDto.DateOfBirth,
-                ID = petDto.ID,
-                Weight = petDto.Weight,
-                Type = _petService.GetPetType(petDto.Type).Name };
-            return View(pet);
+            try
+            {
+                var petDto = _petService.GetPet(id);
+                var pet = new PetViewModel
+                {
+                    Name = petDto.Name,
+                    DateOfBirth = petDto.DateOfBirth,
+                    ID = petDto.ID,
+                    Weight = petDto.Weight,
+                    Type = _petService.GetPetType(petDto.Type).Name
+                };
+                return View(pet);
+            } 
+            catch(Exception e)
+            {
+                return View("NotFound");
+            }
         }
         public IActionResult Confirmation()
         {
@@ -38,7 +44,24 @@ namespace PetStore.WebApp.Controllers
         [HttpPost]
         public IActionResult Update(PetViewModel pet)
         {
-            _petService.UpdatePet(new PetDto { ID = pet.ID, DateOfBirth = pet.DateOfBirth, Name = pet.Name, Type = 4, Weight = pet.Weight });
+            if (_petService.GetAllPetTypes().Where(x => x.Name == pet.Type).ToList().Count == 0)
+            {
+                pet.Errors.Add("Invalid pet type");
+                return View("Index", pet);
+            }
+            if (_petService.GetPets().Where(x => x.Name == pet.Name && x.ID != pet.ID).ToList().Count > 0)
+            {
+                pet.Errors.Add($"Pet with name {pet.Name} already exists");
+                return View("Index", pet);
+            }
+            try
+            {
+                _petService.UpdatePet(new PetDto { ID = pet.ID, DateOfBirth = pet.DateOfBirth, Name = pet.Name, Type = 4, Weight = pet.Weight });
+            }
+            catch(Exception e)
+            {
+                return View("UpdateFail");
+            }
             return View("Confirmation");
         }
     }

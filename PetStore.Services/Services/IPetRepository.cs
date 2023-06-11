@@ -9,5 +9,6 @@ namespace PetStore.Services
         public void DeletePet(PetDto pet);
         public void UpdatePet(PetDto pet);
         public PetType GetPetType(int id);
+        public IList<PetType> GetAllPetTypes();
     }
 }
