@@ -8,19 +8,20 @@ using System.Collections.Generic;
 using System;
 using PetStore.Services.Models;
 using System.Linq;
-
+using PetStore.WebApp.Mappers;
 namespace PetStore.Controllers
 {
     public class HomeController : Controller
     {
-        private int pageNumber = 1;
         private const int NUMBER_OF_ITEMS_PER_PAGE = 10;
         private readonly ILogger<HomeController> _logger;
         private readonly IPetRepository _petService;
-        public HomeController(ILogger<HomeController> logger, IPetRepository petServices)
+        private readonly PetViewModelMapper _mapper;
+        public HomeController(ILogger<HomeController> logger, IPetRepository petServices, PetViewModelMapper mapper)
         {
             _logger = logger;
             _petService = petServices;
+            _mapper = mapper;
         }
 
         public IActionResult Index(PagedResponseViewModel<PetViewModel> model)
@@ -77,16 +78,7 @@ namespace PetStore.Controllers
             var petDtosPaginated = petDtos.Skip((response.PageNumber - 1) * response.ItemsPerPage).Take(response.ItemsPerPage).ToList();
             foreach (var petDto in petDtosPaginated)
             {
-                response.Items.Add(
-                    new PetViewModel
-                    {
-                        DateOfBirth = petDto.DateOfBirth,
-                        Name = petDto.Name,
-                        Type = _petService.GetPetType(petDto.Type).Name,
-                        Weight = petDto.Weight,
-                        ID = petDto.ID
-                    }
-                    );
+                response.Items.Add(_mapper.MapFromPetDto(petDto));
             }
             return View("Index", response);
         }

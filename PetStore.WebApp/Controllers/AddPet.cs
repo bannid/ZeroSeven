@@ -9,36 +9,27 @@ using System.Linq;
 
 namespace PetStore.WebApp.Controllers
 {
-    public class EditPet : Controller
+    public class AddPet : Controller
     {
         private readonly ILogger<EditPet> _logger;
         private readonly IPetRepository _petService;
         private readonly PetViewModelMapper _mapper;
-        public EditPet(ILogger<EditPet> logger, IPetRepository petServices, PetViewModelMapper mapper)
+        public AddPet(ILogger<EditPet> logger, IPetRepository petServices, PetViewModelMapper mapper)
         {
             _logger = logger;
             _petService = petServices;
             _mapper = mapper;
         }
-        public IActionResult Index(string action, int id)
+        public IActionResult Index()
         {
-            try
-            {
-                var petDto = _petService.GetPet(id);
-                var pet = _mapper.MapFromPetDto(petDto);
-                return View(pet);
-            } 
-            catch(Exception e)
-            {
-                return View("NotFound");
-            }
+            return View(new PetViewModel());
         }
         public IActionResult Confirmation()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Update(PetViewModel pet)
+        public IActionResult Add(PetViewModel pet)
         {
             if (_petService.GetAllPetTypes().Where(x => x.Name == pet.Type).ToList().Count == 0)
             {
@@ -53,11 +44,11 @@ namespace PetStore.WebApp.Controllers
             int type = _petService.GetAllPetTypes().Single(x => x.Name == pet.Type).ID;
             try
             {
-                _petService.UpdatePet(_mapper.MapToPetDto(pet));
+                _petService.AddPet(_mapper.MapToPetDto(pet));
             }
             catch(Exception e)
             {
-                return View("UpdateFail");
+                return View("AddFail");
             }
             return View("Confirmation");
         }

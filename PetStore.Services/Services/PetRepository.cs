@@ -53,5 +53,11 @@ namespace PetStore.Services
         {
             return _context.PetTypes.ToList();
         }
+
+        public void AddPet(PetDto pet)
+        {
+            _context.Add(pet);
+            _context.SaveChanges();
+        }
     }
 }

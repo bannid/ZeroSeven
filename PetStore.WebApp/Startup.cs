@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PetStore.Services;
 using PetStore.Services.Data;
+using PetStore.WebApp.Mappers;
+
 namespace PetStore
 {
     public class Startup
@@ -23,6 +25,7 @@ namespace PetStore
             services.AddControllersWithViews();
             services.AddDbContext<PetDbContext>();
             services.AddScoped<IPetRepository, PetRepository>();
+            services.AddScoped<PetViewModelMapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +56,9 @@ namespace PetStore
                 endpoints.MapControllerRoute(
                     name: "EditPet",
                     pattern: "{controller=EditPet}/{action=index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "AddPet",
+                    pattern: "{controller=AddPet}/{action=index}");
             });
         }
     }
